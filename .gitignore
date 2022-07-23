@@ -3,3 +3,9 @@
 /obj/
 /obj/*
 /.idea/*
+
+# dependencies
+/node_modules
+/wwwroot/
+/wwwroot/*
+!/wwwroot/.gitkeep
