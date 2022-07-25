@@ -21,7 +21,7 @@ module.exports = {
                 use: ['file-loader'],
             },
             {
-                test: /\.?js$/,
+                test: /\.?js(x)?$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader",
