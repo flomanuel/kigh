@@ -3,6 +3,7 @@
 /obj/
 /obj/*
 /.idea/*
+!/.idea/icon.svg
 
 # dependencies
 /node_modules
