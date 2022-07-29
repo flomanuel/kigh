@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
-class NewEntry extends AbstractDefaultTemplate {
+class Settings extends AbstractDefaultTemplate {
 
     constructor(props) {
         super(props);
@@ -17,7 +17,7 @@ class NewEntry extends AbstractDefaultTemplate {
                 <Box component="main" sx={{p: 3}}>
                     <Toolbar/>
                     <Typography>
-                        Component: New Entry
+                        Component: Settings
                     </Typography>
                 </Box>
             </>
@@ -25,4 +25,4 @@ class NewEntry extends AbstractDefaultTemplate {
     }
 }
 
-export default NewEntry;
+export default Settings;

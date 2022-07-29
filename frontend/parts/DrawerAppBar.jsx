@@ -15,9 +15,23 @@ import {styled, alpha} from '@mui/material/styles';
 import Drawer from '@mui/material/Drawer';
 import ListItemText from '@mui/material/ListItemText';
 import InputBase from '@mui/material/InputBase';
+import {Link} from "react-router-dom";
 
 const drawerWidth = 240;
-const navItems = ['Home', 'About', 'Contact'];
+const navItems = [
+    {
+        title: "Entries",
+        fragment: "/",
+    },
+    {
+        title: "Add new website",
+        fragment: "/entry",
+    },
+    {
+        title: "Settings",
+        fragment: "/settings",
+    }
+];
 
 function DrawerAppBar(props) {
     const {window} = props;
@@ -35,9 +49,9 @@ function DrawerAppBar(props) {
             <Divider/>
             <List>
                 {navItems.map((item) => (
-                    <ListItem key={item} disablePadding>
+                    <ListItem key={item.title} disablePadding>
                         <ListItemButton sx={{textAlign: 'center'}}>
-                            <ListItemText primary={item}/>
+                            <ListItemText primary={<Link to={item.fragment}>{item.title}</Link>}/>
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -120,8 +134,8 @@ function DrawerAppBar(props) {
 
                     <Box sx={{display: {xs: 'none', sm: 'block'}}}>
                         {navItems.map((item) => (
-                            <Button key={item} sx={{color: '#fff'}}>
-                                {item}
+                            <Button key={item.title} sx={{color: '#fff'}}>
+                                <Link to={item.fragment}>{item.title}</Link>
                             </Button>
                         ))}
                     </Box>

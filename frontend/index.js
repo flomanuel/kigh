@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
 import '@fontsource/roboto/300.css';
@@ -10,15 +10,20 @@ import "./styles/main.scss";
 
 import Main from "./components/Main.jsx";
 import NewEntry from "./components/NewEntry.jsx";
+import Settings from "./components/Settings.jsx";
 
+const root = ReactDOM.createRoot(
+    document.getElementById('root')
+);
 
-ReactDOM.render(
+root.render(
     <Router>
         <Routes>
+            <Route path="/settings" element={<Settings/>}/>
             <Route path="/entry" element={<NewEntry/>}/>
             <Route path="/entry/:id" element={<NewEntry/>}/>
+            <Route path="/" element={<Main/>}/>
             <Route path="*" element={<Main/>}/>
         </Routes>
-    </Router>,
-    document.getElementById('root')
+    </Router>
 );
