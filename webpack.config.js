@@ -1,11 +1,16 @@
 const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+console.clear();
+console.info('\n============ Building App ============');
+
 module.exports = {
     entry: path.join(__dirname, "frontend", "index.js"),
     output: {
         path: path.resolve(__dirname, "wwwroot"),
     },
+    cache: true,
+    devtool: 'source-map',
     module: {
         rules: [
             {
