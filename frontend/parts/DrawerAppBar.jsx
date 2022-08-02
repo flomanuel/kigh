@@ -1,4 +1,6 @@
 import * as React from 'react';
+import {Link} from "react-router-dom";
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -15,8 +17,9 @@ import {styled, alpha} from '@mui/material/styles';
 import Drawer from '@mui/material/Drawer';
 import ListItemText from '@mui/material/ListItemText';
 import InputBase from '@mui/material/InputBase';
-import {Link} from "react-router-dom";
+
 import MainIcon from "./MainIcon";
+
 
 const drawerWidth = 240;
 const navItems = [
@@ -44,7 +47,7 @@ function DrawerAppBar(props) {
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{textAlign: 'center'}}>
-            <MainIcon/>
+            <MainIcon mobile={true}/>
             <Divider/>
             <List>
                 {navItems.map((item) => (
@@ -118,7 +121,7 @@ function DrawerAppBar(props) {
                         component="div"
                         sx={{flexGrow: 1, display: {xs: 'none', sm: 'block'}}}
                     >
-                        <MainIcon/>
+                        <MainIcon mobile={false}/>
                     </Typography>
 
                     <Search>
