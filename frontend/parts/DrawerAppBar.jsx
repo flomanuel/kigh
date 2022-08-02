@@ -16,6 +16,7 @@ import Drawer from '@mui/material/Drawer';
 import ListItemText from '@mui/material/ListItemText';
 import InputBase from '@mui/material/InputBase';
 import {Link} from "react-router-dom";
+import MainIcon from "./MainIcon";
 
 const drawerWidth = 240;
 const navItems = [
@@ -43,9 +44,7 @@ function DrawerAppBar(props) {
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{textAlign: 'center'}}>
-            <Typography variant="h6" sx={{my: 2}}>
-                MUI
-            </Typography>
+            <MainIcon/>
             <Divider/>
             <List>
                 {navItems.map((item) => (
@@ -119,7 +118,7 @@ function DrawerAppBar(props) {
                         component="div"
                         sx={{flexGrow: 1, display: {xs: 'none', sm: 'block'}}}
                     >
-                        MUI
+                        <MainIcon/>
                     </Typography>
 
                     <Search>

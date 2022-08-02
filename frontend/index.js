@@ -8,9 +8,9 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import "./styles/main.scss";
 
-import Main from "./components/Main.jsx";
-import NewEntry from "./components/NewEntry.jsx";
-import Settings from "./components/Settings.jsx";
+import Main from "./pages/Main";
+import NewEntry from "./pages/NewEntry";
+import Settings from "./pages/Settings";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root')

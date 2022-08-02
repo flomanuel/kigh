@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import DrawerAppBar from "../parts/DrawerAppBar.jsx";
+import DrawerAppBar from "../parts/DrawerAppBar";
 
 class AbstractDefaultTemplate extends Component {
 

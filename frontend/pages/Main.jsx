@@ -1,11 +1,10 @@
 import React from "react";
-import AbstractDefaultTemplate from "./AbstractDefaultTemplate.jsx";
+import AbstractDefaultTemplate from "./AbstractDefaultTemplate";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
-class NewEntry extends AbstractDefaultTemplate {
-
+class Main extends AbstractDefaultTemplate {
     constructor(props) {
         super(props);
     }
@@ -17,7 +16,7 @@ class NewEntry extends AbstractDefaultTemplate {
                 <Box component="main" sx={{p: 3}}>
                     <Toolbar/>
                     <Typography>
-                        Component: New Entry
+                        Component: Main
                     </Typography>
                 </Box>
             </>
@@ -25,4 +24,4 @@ class NewEntry extends AbstractDefaultTemplate {
     }
 }
 
-export default NewEntry;
+export default Main;
