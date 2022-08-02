@@ -9,7 +9,9 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, "wwwroot"),
     },
-    cache: true,
+    resolve: {
+        extensions: ['.jsx', '.js'],
+    },
     devtool: 'source-map',
     module: {
         rules: [
@@ -35,6 +37,12 @@ module.exports = {
                     },
                 }
             },
+            {
+                test: /\.svg$/,
+                exclude: /node_modules/,
+                issuer: /\.[jt]sx?$/,
+                use: [{loader: '@svgr/webpack', options: {exportType: 'named'}}]
+            },
         ]
     },
     plugins: [
@@ -42,5 +50,4 @@ module.exports = {
             template: path.join(__dirname, "frontend", "index.html"),
         }),
     ],
-
 }
