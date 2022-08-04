@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -17,7 +17,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-    <Router>
+    <BrowserRouter >
         <Routes>
             <Route path="/settings" element={<Settings/>}/>
             <Route path="/entry" element={<NewEntry/>}/>
@@ -25,5 +25,5 @@ root.render(
             <Route path="/" element={<Main/>}/>
             <Route path="*" element={<Main/>}/>
         </Routes>
-    </Router>
+    </BrowserRouter>
 );

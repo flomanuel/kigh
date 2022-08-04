@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {Link} from "react-router-dom";
+import React, {useState} from "react";
+import {Navigate, useLocation} from "react-router-dom";
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -18,17 +18,10 @@ import SearchIconWrapper from "./SearchIconWrapper";
 import StyledInputBase from "./StyledInputBase";
 
 
-class DrawerAppBar extends Component {
-
-    constructor(props) {
-        super(props);
-        this.window = this.props.window;
-        this.state = {
-            mobileOpen: false
-        }
-
-        this.drawerWidth = 240;
-        this.navItems = [
+function DrawerAppBar() {
+    const [mobile, setMobile] = useState(false);
+    const [navItems] = useState(
+        [
             {
                 title: "Entries",
                 fragment: "/",
@@ -41,78 +34,103 @@ class DrawerAppBar extends Component {
                 title: "Settings",
                 fragment: "/settings",
             }
-        ];
+        ]
+    );
+    const [navRoute, setNavRoute] = useState(null);
+    const drawerWidth = 240;
+
+    const NavItemElement = (index) => {
+        const location = useLocation();
+        const isActiveElement = navItems[index].fragment === location.pathname;
+        return (
+            <Button key={navItems[index].title}
+                    color="inherit"
+                    onClick={() => {
+                        if (!isActiveElement) {
+                            setNavRoute(navItems[index].fragment)
+                        }
+                    }}>
+                {navItems[index].title}
+                {
+                    !isActiveElement &&
+                    typeof navRoute === "string" &&
+                    <Navigate to={navRoute} replace={true}/>
+                }
+            </Button>
+        )
     }
 
-    container = this.window !== undefined ? () => this.window().document.body : undefined;
-
-    render() {
-        
-        const setMobileOpen = () => this.setState({mobileOpen: !this.state.mobileOpen})
-        
+    const drawerNav = () => {
+        const container = window !== undefined ? () => window.document.body : undefined;
         return (
-            <Box sx={{display: 'flex'}}>
-                <AppBar component="nav">
-                    <Toolbar>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            edge="start"
-                            onClick={setMobileOpen}
-                            sx={{mr: 2, display: {sm: 'none'}}}
-                        >
-                            <MenuIcon/>
-                        </IconButton>
-                        <Typography
-                            variant="h6"
-                            component="div"
-                            sx={{flexGrow: 1, display: {xs: 'none', sm: 'block'}}}
-                        >
-                            <MainIcon mobile={false}/>
-                        </Typography>
-
-                        <Search>
-                            <SearchIconWrapper>
-                                <SearchIcon/>
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Search…"
-                                inputProps={{'aria-label': 'search'}}
-                            />
-                        </Search>
-
-                        <Box sx={{display: {xs: 'none', sm: 'block'}}}>
-                            {this.navItems.map((item) => (
-                                <Button key={item.title} sx={{color: '#fff'}}>
-                                    <Link to={item.fragment}>{item.title}</Link>
-                                </Button>
-                            ))}
-                        </Box>
-                    </Toolbar>
-                </AppBar>
-                <Box component="nav">
-                    <Drawer
-                        container={this.container}
-                        variant="temporary"
-                        open={this.state.mobileOpen}
-                        onClose={setMobileOpen}
-                        ModalProps={{
-                            keepMounted: true, // Better open performance on mobile.
-                        }}
-                        sx={{
-                            display: {xs: 'block', sm: 'none'},
-                            '& .MuiDrawer-paper': {boxSizing: 'border-box', width: this.drawerWidth},
-                        }}
-                    >
-                        <DrawerInterior navItems={this.navItems}
-                                        setMobileOpen={setMobileOpen}
-                                        {...this.props}
-                        />
-                    </Drawer>
-                </Box>
+            <Box component="nav">
+                <Drawer
+                    container={container}
+                    variant="temporary"
+                    open={mobile}
+                    onClose={() => {
+                        setMobile(!mobile)
+                    }}
+                    ModalProps={{
+                        keepMounted: true, // Better open performance on mobile.
+                    }}
+                    sx={{
+                        display: {xs: 'block', sm: 'none'},
+                        '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth},
+                    }}
+                >
+                    <DrawerInterior navItems={navItems}
+                                    mobile={mobile}
+                                    setMobile={setMobile}
+                                    setNavRoute={setNavRoute}
+                    />
+                </Drawer>
             </Box>
         )
     }
+
+    return (
+        <Box sx={{display: 'flex'}}>
+            <AppBar component="nav">
+                <Toolbar>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={() => {
+                            setMobile(!mobile)
+                        }}
+                        sx={{mr: 2, display: {sm: 'none'}}}
+                    >
+                        <MenuIcon/>
+                    </IconButton>
+                    <Typography
+                        variant="h6"
+                        component="div"
+                        sx={{flexGrow: 1, display: {xs: 'none', sm: 'block'}}}
+                    >
+                        <MainIcon mobile={false}/>
+                    </Typography>
+                    <Search>
+                        <SearchIconWrapper>
+                            <SearchIcon/>
+                        </SearchIconWrapper>
+                        <StyledInputBase
+                            placeholder="Search…"
+                            inputProps={{'aria-label': 'search'}}
+                        />
+                    </Search>
+
+                    <Box sx={{display: {xs: 'none', sm: 'block'}}}>
+                        {NavItemElement(0)}
+                        {NavItemElement(1)}
+                        {NavItemElement(2)}
+                    </Box>
+                </Toolbar>
+            </AppBar>
+            {drawerNav()}
+        </Box>
+    )
 }
 
 export default DrawerAppBar;
