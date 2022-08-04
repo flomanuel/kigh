@@ -1,8 +1,10 @@
 import React from "react";
+import PropTypes from 'prop-types';
+
 import {Avatar, SvgIcon} from "@mui/material";
+import {blue, common} from "@mui/material/colors";
 import {ReactComponent as IconGlobe} from '../static/images/IconGlobe.svg';
 import {ReactComponent as IconGlobeWhite} from '../static/images/IconGlobe--white.svg';
-import {blue, common} from "@mui/material/colors";
 
 function MainIcon(props) {
     return (
@@ -11,6 +13,10 @@ function MainIcon(props) {
                      sx={{width: 35, height: 35}}/>
         </Avatar>
     )
+}
+
+MainIcon.propTypes = {
+    mobile: PropTypes.bool
 }
 
 export default MainIcon;

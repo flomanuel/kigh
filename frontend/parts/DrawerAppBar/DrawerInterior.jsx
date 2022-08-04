@@ -1,4 +1,6 @@
 import React from "react";
+import {useLocation} from "react-router-dom";
+import PropTypes from "prop-types";
 
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -9,7 +11,6 @@ import ListItemText from "@mui/material/ListItemText";
 import {blue} from "@mui/material/colors";
 
 import MainIcon from "../MainIcon";
-import {useLocation} from "react-router-dom";
 
 
 function DrawerInterior(props) {
@@ -38,6 +39,13 @@ function DrawerInterior(props) {
             </List>
         </Box>
     );
+}
+
+DrawerInterior.propTypes = {
+    setMobile: PropTypes.func,
+    mobile: PropTypes.bool,
+    navItems: PropTypes.array,
+    setNavRoute: PropTypes.func
 }
 
 export default DrawerInterior;
