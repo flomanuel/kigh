@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 console.clear();
-console.info('\n============ Building App ============');
+console.info('\n\n\n\n============ Building App ============');
 
 module.exports = {
     entry: path.join(__dirname, "frontend", "index.js"),
