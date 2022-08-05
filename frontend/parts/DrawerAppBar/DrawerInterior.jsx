@@ -1,5 +1,5 @@
 import React from "react";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import PropTypes from "prop-types";
 
 import Box from "@mui/material/Box";
@@ -14,6 +14,7 @@ import MainIcon from "../MainIcon";
 
 
 function DrawerInterior(props) {
+    const navigate = useNavigate();
     const location = useLocation();
     return (
         <Box onClick={() => {
@@ -22,16 +23,16 @@ function DrawerInterior(props) {
             <MainIcon mobile={true}/>
             <Divider/>
             <List>
-                {props.navItems.map((item) => (
-                    <ListItem key={item.title} disablePadding>
+                {props.navItems.map((el, index) => (
+                    <ListItem key={index} disablePadding>
                         <ListItemButton sx={{textAlign: 'center', color: blue["700"]}}>
                             <ListItemText
                                 onClick={() => {
-                                    if (item.fragment !== location.pathname) {
-                                        props.setNavRoute(item.fragment)
+                                    if (el.fragment !== location.pathname) {
+                                        navigate(el.fragment, {replace: true})
                                     }
                                 }}>
-                                {item.title}
+                                {el.title}
                             </ListItemText>
                         </ListItemButton>
                     </ListItem>
@@ -44,8 +45,7 @@ function DrawerInterior(props) {
 DrawerInterior.propTypes = {
     setMobile: PropTypes.func,
     mobile: PropTypes.bool,
-    navItems: PropTypes.array,
-    setNavRoute: PropTypes.func
+    navItems: PropTypes.array
 }
 
 export default DrawerInterior;

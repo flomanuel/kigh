@@ -3,7 +3,7 @@ import DrawerAppBar from "../parts/DrawerAppBar/_index";
 
 function DefaultTemplate() {
     return (
-        <DrawerAppBar key={Date.now()}/>
+        <DrawerAppBar/>
     )
 }
 

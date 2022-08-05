@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Navigate, useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -16,9 +16,11 @@ import MainIcon from "../MainIcon";
 import Search from "./Search";
 import SearchIconWrapper from "./SearchIconWrapper";
 import StyledInputBase from "./StyledInputBase";
+import PropTypes from "prop-types";
 
 
 function DrawerAppBar() {
+    const navigate = useNavigate();
     const [mobile, setMobile] = useState(false);
     const [navItems] = useState(
         [
@@ -36,31 +38,30 @@ function DrawerAppBar() {
             }
         ]
     );
-    const [navRoute, setNavRoute] = useState(null);
     const drawerWidth = 240;
 
-    const NavItemElement = (index) => {
+
+    const NavItemElement = (props) => {
         const location = useLocation();
-        const isActiveElement = navItems[index].fragment === location.pathname;
+        const isActiveElement = props.el.fragment === location.pathname;
         return (
-            <Button key={navItems[index].title}
-                    color="inherit"
+            <Button color="inherit"
                     onClick={() => {
                         if (!isActiveElement) {
-                            setNavRoute(navItems[index].fragment)
+                            navigate(props.el.fragment, {replace: true})
                         }
                     }}>
-                {navItems[index].title}
-                {
-                    !isActiveElement &&
-                    typeof navRoute === "string" &&
-                    <Navigate to={navRoute} replace={true}/>
-                }
+                {props.el.title}
             </Button>
         )
     }
 
-    const drawerNav = () => {
+    NavItemElement.propTypes = {
+        el: PropTypes.object,
+        index: PropTypes.number
+    }
+
+    const DrawerNav = () => {
         const container = window !== undefined ? () => window.document.body : undefined;
         return (
             <Box component="nav">
@@ -82,7 +83,6 @@ function DrawerAppBar() {
                     <DrawerInterior navItems={navItems}
                                     mobile={mobile}
                                     setMobile={setMobile}
-                                    setNavRoute={setNavRoute}
                     />
                 </Drawer>
             </Box>
@@ -122,13 +122,13 @@ function DrawerAppBar() {
                     </Search>
 
                     <Box sx={{display: {xs: 'none', sm: 'block'}}}>
-                        {NavItemElement(0)}
-                        {NavItemElement(1)}
-                        {NavItemElement(2)}
+                        {navItems.map((el, index) => (
+                            <NavItemElement key={index} el={el}/>
+                        ))}
                     </Box>
                 </Toolbar>
             </AppBar>
-            {drawerNav()}
+            <DrawerNav/>
         </Box>
     )
 }
