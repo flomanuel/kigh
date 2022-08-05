@@ -12,7 +12,8 @@ export default function EntriesList(props) {
     EntriesList.propTypes = {
         entries: PropTypes.array,
         selectedEntries: PropTypes.array,
-        setSelectedEntries: PropTypes.func
+        setSelectedEntries: PropTypes.func,
+        setShowContextMenu: PropTypes.func
     }
 
     return (

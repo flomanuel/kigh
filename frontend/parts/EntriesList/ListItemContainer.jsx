@@ -20,57 +20,38 @@ export default function ListItemContainer(props) {
     }
 
     const addRemoveEntry = (event) => {
-        let isEventAllowed = EventAllowed(event, 'ListItemContainer__Switch');
+        let isEventAllowed = EventAllowed(event, ['ListItemContainer__Switch']);
         if (isEventAllowed) {
             event.preventDefault();
             props.setSelectedEntries(prevState => {
-                if (prevState.includes(props.entry.id)) {
-                    return prevState.filter(el => el !== props.entry.id);
+                if (event.ctrlKey) {
+                    if (prevState.includes(props.entry.id)) {
+                        return prevState.filter(el => el !== props.entry.id);
+                    }
+                    return [...prevState, props.entry.id];
+                } else {
+                    if (prevState.length > 1) {
+                        return [props.entry.id];
+                    } else if (prevState.includes(props.entry.id)) {
+                        return [];
+                    } else {
+                        return [props.entry.id];
+                    }
                 }
-                return [...prevState, props.entry.id];
             });
         }
     }
 
-    let numClicks = 0;
-    let singleClickTimer = null;
-    const handleClick = (event, actions) => {
-        numClicks++;
-        if (numClicks === 1) {
-            singleClickTimer = setTimeout(() => {
-                numClicks = 0;
-                actions.singleClick(event);
-            }, 250);
-        } else if (numClicks === 2) {
-            clearTimeout(singleClickTimer);
-            numClicks = 0;
-            actions.doubleClick(event);
-        }
-    };
-
     return (
         <ListItem alignItems="flex-start"
-                  onClick={(e) => {
-                      handleClick(e, {
-                              singleClick: (e) => {
-                                  addRemoveEntry(e);
-                              },
-                              doubleClick: (e) => {
-                                  console.log(e);
-                              }
-                          }
-                      );
-                  }}
-                  onContextMenu={e => {
-                      e.preventDefault();
-                      console.log("context menu");
-                  }}
-                  className={`${props.selectedEntries.includes(props.entry.id) ? "ListItemContainer--selected" : ""}`}
+                  onClick={e => addRemoveEntry(e)}
+                  className={`ListItemContainer ${props.selectedEntries.includes(props.entry.id) ? "ListItemContainer--selected" : ""}`}
                   sx={{
                       cursor: "default",
                       '&.MuiListItem-root:hover:not(.ListItemContainer--selected)': {background: grey["200"]},
                       ...(props.selectedEntries.includes(props.entry.id) && {'&.MuiListItem-root': {background: grey["300"]}})
                   }}
+                  data-id={props.entry.id}
         >
             <ListItemAvatar>
                 <Avatar alt={'Icon for entry' + props.entry.title} src={props.entry.image}/>

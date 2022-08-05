@@ -6,6 +6,9 @@ import PropTypes from "prop-types";
 import DrawerInterior from "../parts/DrawerAppBar/DrawerInterior";
 import EntriesList from "../parts/EntriesList/_index";
 import EventAllowed from "../helpers/EventAllowed";
+import IconMenu from "../parts/ContextMenu/_index";
+import SelectElement from "../helpers/SelectElement";
+
 
 function Main() {
 
@@ -34,16 +37,56 @@ function Main() {
 
     const [selectedEntries, setSelectedEntries] = useState([]);
 
+    const [contextMenuSettings, setContextMenuSettings] = useState({
+        showMenu: false,
+        xPosition: 0,
+        yPosition: 0
+    });
+
+    const contextMenuWidth = 300;
+
     const clearSelectedEntries = (e) => {
-        if (EventAllowed(e, 'MuiListItem-root')) {
+        if (EventAllowed(e, ['MuiListItem-root', 'ContextMenu'])) {
             setSelectedEntries([]);
+        }
+    }
+
+    const toggleContextMenu = e => {
+        if (!e.ctrlKey && EventAllowed(e, ['ContextMenu', 'ListItemContainer__Switch'])) {
+            e.preventDefault();
+            const xp = window.innerWidth < e.pageX + contextMenuWidth ? e.pageX - contextMenuWidth : e.pageX;
+            const xy = e.pageY;
+            if (e.button === 0) { //Main button. Always close context menu.
+                setContextMenuSettings(oldState => {
+                    return {...oldState, xPosition: xp, yPosition: xy, showMenu: false}
+                });
+            } else {
+                if (!EventAllowed(e, ['ListItemContainer'])) {
+                    const element = SelectElement(e, ['ListItemContainer']);
+                    if (!element.classList.contains('ListItemContainer--selected')) {
+                        const id = element.dataset.id;
+                        setSelectedEntries([id]);
+                    }
+                }
+                setContextMenuSettings(oldState => {
+                    return {...oldState, xPosition: xp, yPosition: xy, showMenu: true}
+                });
+            }
         }
     }
 
     useEffect(() => {
         document.addEventListener('click', clearSelectedEntries);
+        document.addEventListener('click', (e) => {
+            toggleContextMenu(e);
+        });
+        document.addEventListener('contextmenu', (e) => {
+            toggleContextMenu(e);
+        });
         return function cleanup() {
             document.removeEventListener('click', clearSelectedEntries)
+            document.removeEventListener('click', toggleContextMenu)
+            document.removeEventListener('contextmenu', toggleContextMenu)
         }
     }, [])
 
@@ -56,9 +99,19 @@ function Main() {
             <DefaultTemplate/>
             <Box component="main" sx={{p: 3, height: "100%"}}>
                 <Toolbar/>
-                <EntriesList entries={entries} selectedEntries={selectedEntries}
-                             setSelectedEntries={setSelectedEntries}/>
+                <EntriesList entries={entries}
+                             selectedEntries={selectedEntries}
+                             setSelectedEntries={setSelectedEntries}
+                />
             </Box>
+            {
+                contextMenuSettings.showMenu &&
+                <IconMenu posX={contextMenuSettings.xPosition}
+                          posY={contextMenuSettings.yPosition}
+                          width={contextMenuWidth}
+                          selectedEntries={selectedEntries}
+                />
+            }
         </>
     )
 }
