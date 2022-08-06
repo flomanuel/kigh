@@ -20,8 +20,7 @@ export default function ListItemContainer(props) {
     }
 
     const addRemoveEntry = (event) => {
-        let isEventAllowed = EventAllowed(event, ['ListItemContainer__Switch']);
-        if (isEventAllowed) {
+        if (EventAllowed(event, ['ListItemContainer__Switch'])) {
             event.preventDefault();
             props.setSelectedEntries(prevState => {
                 if (event.ctrlKey) {

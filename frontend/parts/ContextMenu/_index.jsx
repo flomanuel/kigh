@@ -1,5 +1,6 @@
 import * as React from 'react';
 import PropTypes from "prop-types";
+import {useNavigate} from "react-router-dom";
 
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
@@ -22,6 +23,11 @@ export default function IconMenu(props) {
         selectedEntries: PropTypes.array
     }
 
+    const nav = useNavigate();
+    const navigateEditPage = () => {
+        nav(`/entry/${props.selectedEntries[0]}`, {replace: true});
+    }
+
     return (
         <Paper
             sx={{
@@ -36,7 +42,7 @@ export default function IconMenu(props) {
             <MenuList>
                 {
                     props.selectedEntries.length <= 1 &&
-                    (<MenuItem>
+                    (<MenuItem onClick={() => navigateEditPage()}>
                         <ListItemIcon>
                             <EditIcon fontSize="small"/>
                         </ListItemIcon>
