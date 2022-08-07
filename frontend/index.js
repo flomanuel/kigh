@@ -16,7 +16,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-    <BrowserRouter >
+    <BrowserRouter>
         <Routes>
             <Route path="/settings" element={<Settings/>}/>
             <Route path="/entry" element={<NewEntry/>}/>

@@ -14,13 +14,14 @@ import ImportExportIcon from '@mui/icons-material/ImportExport';
 import Cloud from '@mui/icons-material/Cloud';
 
 
-export default function IconMenu(props) {
+export default function ContextMenu(props) {
 
-    IconMenu.propTypes = {
+    ContextMenu.propTypes = {
         posX: PropTypes.number,
         posY: PropTypes.number,
         width: PropTypes.number,
-        selectedEntries: PropTypes.array
+        selectedEntries: PropTypes.array,
+        entryDataService: PropTypes.object,
     }
 
     const nav = useNavigate();
@@ -41,7 +42,7 @@ export default function IconMenu(props) {
         >
             <MenuList>
                 {
-                    props.selectedEntries.length <= 1 &&
+                    props.selectedEntries.length === 1 &&
                     (<MenuItem onClick={() => navigateEditPage()}>
                         <ListItemIcon>
                             <EditIcon fontSize="small"/>
@@ -49,22 +50,31 @@ export default function IconMenu(props) {
                         <ListItemText>Edit</ListItemText>
                     </MenuItem>)
                 }
-                <MenuItem>
+                <MenuItem 
+                    sx={{...(props.selectedEntries.length === 0 && {cursor: 'not-allowed'})}}
+                    onClick={() => {props.entryDataService.deleteEntries(props.selectedEntries)}}
+                >
                     <ListItemIcon>
-                        <DeleteIcon fontSize="small"/>
+                        <DeleteIcon
+                            color={props.selectedEntries.length === 0 ? "disabled" : ""}
+                            fontSize="small"/>
                     </ListItemIcon>
                     <ListItemText>Delete{`${props.selectedEntries.length > 1 ? " Selection" : ''}`}</ListItemText>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem sx={{...(props.selectedEntries.length === 0 && {cursor: 'not-allowed'})}}>
                     <ListItemIcon>
-                        <ImportExportIcon fontSize="small"/>
+                        <ImportExportIcon
+                            color={props.selectedEntries.length === 0 ? "disabled" : ""}
+                            fontSize="small"/>
                     </ListItemIcon>
                     <ListItemText>Export{`${props.selectedEntries.length > 1 ? " Selection" : ''}`}</ListItemText>
                 </MenuItem>
                 <Divider/>
-                <MenuItem>
+                <MenuItem sx={{...(props.selectedEntries.length === 0 && {cursor: 'not-allowed'})}}>
                     <ListItemIcon>
-                        <Cloud fontSize="small"/>
+                        <Cloud
+                            color={props.selectedEntries.length === 0 ? "disabled" : ""}
+                            fontSize="small"/>
                     </ListItemIcon>
                     <ListItemText>Dummy text</ListItemText>
                 </MenuItem>
