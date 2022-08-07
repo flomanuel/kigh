@@ -19,6 +19,7 @@ namespace kigh
                 .SetSize(new Size(900, 500))
                 .Center()
                 .SetResizable(true)
+                .SetIconFile("wwwroot/IconGlobe.svg") // todo: fix icon load
                 .Load("wwwroot/index.html");
 
             window.WaitForClose();

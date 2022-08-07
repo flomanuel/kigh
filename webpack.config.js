@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 console.clear();
 console.info('\n\n\n\n============ Building App ============');
@@ -48,6 +49,14 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: path.join(__dirname, "frontend", "index.html"),
+        }),
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: path.join(__dirname, "frontend", "static", "images", "IconGlobe.svg"),
+                    to: path.join(__dirname, "wwwroot", "IconGlobe.svg")
+                }
+            ],
         }),
     ],
 }
