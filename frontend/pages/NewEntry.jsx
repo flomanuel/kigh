@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router";
-import {Card, CardActionArea, Skeleton, TextField, Tooltip} from "@mui/material";
+import {Card, CardActionArea, FormGroup, FormLabel, Skeleton, Switch, TextField, Tooltip} from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import SaveIcon from '@mui/icons-material/Save';
@@ -145,6 +145,15 @@ function NewEntry() {
                                    defaultValue={entry.description}
                                    onChange={e => entry.description = e.target.value}
                         />
+                        <FormGroup>
+                            <FormLabel component="legend">open at startup</FormLabel>
+                            <Switch
+                                defaultChecked={entry.openAtStartup}
+                                onChange={(e) => {
+                                    entry.openAtStartup = Boolean(e.target.checked);
+                                }}
+                            />
+                        </FormGroup>
                         <ImageUpload/>
                     </>
                 }
@@ -158,6 +167,7 @@ function NewEntry() {
                         }
                         navigate('/', {replace: true});
                     }}
+                    //todo: use promise, feedback data service show error/success
                     // loading={loading}
                     loadingPosition="start"
                     startIcon={<SaveIcon/>}
