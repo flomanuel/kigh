@@ -10,19 +10,23 @@ import '@fontsource/roboto/700.css';
 import Main from "./pages/Main";
 import NewEntry from "./pages/NewEntry";
 import Settings from "./pages/Settings";
+import FeedbackProvider from "./parts/FeedbackProvider/_index";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root')
 );
 
 root.render(
-    <BrowserRouter>
-        <Routes>
-            <Route path="/settings" element={<Settings/>}/>
-            <Route path="/entry" element={<NewEntry/>}/>
-            <Route path="/entry/:id" element={<NewEntry/>}/>
-            <Route path="/" element={<Main/>}/>
-            <Route path="*" element={<Main/>}/>
-        </Routes>
-    </BrowserRouter>
+    <>
+        <FeedbackProvider/>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/settings" element={<Settings/>}/>
+                <Route path="/entry" element={<NewEntry/>}/>
+                <Route path="/entry/:id" element={<NewEntry/>}/>
+                <Route path="/" element={<Main/>}/>
+                <Route path="*" element={<Main/>}/>
+            </Routes>
+        </BrowserRouter>
+    </>
 );

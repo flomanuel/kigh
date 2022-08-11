@@ -13,10 +13,6 @@ import EntryDataService from "../services/EntryDataService";
 function Main() {
     const [entries, setEntriesHook] = useState(null);
     const [selectedEntries, setSelectedEntriesHook] = useState(null);
-    
-    const setSelectedEntries = (entries) => {
-        EntryDataService.updateEntrySelection(entries);
-    }
 
     useEffect(() => {
         const entryChange = EntryDataService.onEntryChange().subscribe(entriesArray => {
@@ -39,7 +35,7 @@ function Main() {
 
     const clearSelectedEntries = (e) => {
         if (EventAllowed(e, ['MuiListItem-root', 'ContextMenu'])) {
-            setSelectedEntries([]);
+            EntryDataService.updateEntrySelection([]);
         }
     }
 
@@ -65,7 +61,7 @@ function Main() {
                     const element = SelectElement(e, ['ListItemContainer']);
                     if (!element.classList.contains('ListItemContainer--selected')) {
                         const id = element.dataset.id;
-                        setSelectedEntries([id]);
+                        EntryDataService.updateEntrySelection([id]);
                     }
                 }
                 setContextMenuSettings(oldState => {
@@ -96,7 +92,6 @@ function Main() {
                     <EntriesList
                         entries={entries}
                         selectedEntries={selectedEntries}
-                        setSelectedEntries={setSelectedEntries}
                     />
                 }
                 {
@@ -114,7 +109,8 @@ function Main() {
                              posY={contextMenuSettings.yPosition}
                              width={contextMenuWidth}
                              selectedEntries={selectedEntries}
-                             entryDataService={EntryDataService}
+                             toggleContextMenu={toggleContextMenu}
+                             setContextMenuSettings={setContextMenuSettings}
                 />
             }
         </>

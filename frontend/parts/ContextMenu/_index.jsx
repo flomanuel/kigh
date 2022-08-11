@@ -1,8 +1,8 @@
 import * as React from 'react';
 import PropTypes from "prop-types";
 import {useNavigate} from "react-router-dom";
+import copy from 'copy-to-clipboard';
 
-import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
@@ -11,7 +11,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
-import Cloud from '@mui/icons-material/Cloud';
+import EntryDataService from "../../services/EntryDataService";
+import FeedbackDataService from "../../services/FeedbackDataService";
 
 
 export default function ContextMenu(props) {
@@ -21,12 +22,35 @@ export default function ContextMenu(props) {
         posY: PropTypes.number,
         width: PropTypes.number,
         selectedEntries: PropTypes.array,
-        entryDataService: PropTypes.object,
+        setContextMenuSettings: PropTypes.func
     }
 
     const nav = useNavigate();
-    const navigateEditPage = () => {
+    const navigateToEditPage = () => {
         nav(`/entry/${props.selectedEntries[0]}`, {replace: true});
+    }
+
+    const exportSelection = async () => {
+        const res = await EntryDataService.exportEntrySelectionElements();
+        if (copy(res)) {
+            FeedbackDataService.addFeedback({
+                severity: 'success',
+                message: "Copied exported data to clipboard.",
+                open: true
+            })
+        } else {
+            FeedbackDataService.addFeedback({
+                severity: 'error',
+                message: "Could not copy exported data to clipboard.",
+                open: true
+            })
+        }
+    }
+
+    const closeContextMenu = () => {
+        props.setContextMenuSettings(oldState => {
+            return {...oldState, showMenu: false}
+        });
     }
 
     return (
@@ -43,16 +67,21 @@ export default function ContextMenu(props) {
             <MenuList>
                 {
                     props.selectedEntries.length === 1 &&
-                    (<MenuItem onClick={() => navigateEditPage()}>
+                    (<MenuItem onClick={() => navigateToEditPage()}>
                         <ListItemIcon>
                             <EditIcon fontSize="small"/>
                         </ListItemIcon>
                         <ListItemText>Edit</ListItemText>
                     </MenuItem>)
                 }
-                <MenuItem 
+                <MenuItem
                     sx={{...(props.selectedEntries.length === 0 && {cursor: 'not-allowed'})}}
-                    onClick={() => {props.entryDataService.deleteEntries(props.selectedEntries)}}
+                    onClick={() => {
+                        props.selectedEntries.forEach(entry => {
+                            EntryDataService.deleteEntry(entry);
+                        });
+                        closeContextMenu();
+                    }}
                 >
                     <ListItemIcon>
                         <DeleteIcon
@@ -61,22 +90,19 @@ export default function ContextMenu(props) {
                     </ListItemIcon>
                     <ListItemText>Delete{`${props.selectedEntries.length > 1 ? " Selection" : ''}`}</ListItemText>
                 </MenuItem>
-                <MenuItem sx={{...(props.selectedEntries.length === 0 && {cursor: 'not-allowed'})}}>
+                <MenuItem
+                    sx={{...(props.selectedEntries.length === 0 && {cursor: 'not-allowed'})}}
+                    onClick={() => {
+                        exportSelection();
+                        closeContextMenu();
+                    }}
+                >
                     <ListItemIcon>
                         <ImportExportIcon
                             color={props.selectedEntries.length === 0 ? "disabled" : ""}
                             fontSize="small"/>
                     </ListItemIcon>
                     <ListItemText>Export{`${props.selectedEntries.length > 1 ? " Selection" : ''}`}</ListItemText>
-                </MenuItem>
-                <Divider/>
-                <MenuItem sx={{...(props.selectedEntries.length === 0 && {cursor: 'not-allowed'})}}>
-                    <ListItemIcon>
-                        <Cloud
-                            color={props.selectedEntries.length === 0 ? "disabled" : ""}
-                            fontSize="small"/>
-                    </ListItemIcon>
-                    <ListItemText>Dummy text</ListItemText>
                 </MenuItem>
             </MenuList>
         </Paper>

@@ -31,15 +31,14 @@ function DrawerAppBar() {
             {
                 title: "Add new website",
                 fragment: "/entry",
-            },
+            }/*,
             {
                 title: "Settings",
                 fragment: "/settings",
-            }
+            }*/
         ]
     );
     const drawerWidth = 240;
-
 
     const NavItemElement = (props) => {
         const location = useLocation();
@@ -120,7 +119,6 @@ function DrawerAppBar() {
                             inputProps={{'aria-label': 'search'}}
                         />
                     </Search>
-
                     <Box sx={{display: {xs: 'none', sm: 'block'}}}>
                         {navItems.map((el, index) => (
                             <NavItemElement key={index} el={el}/>

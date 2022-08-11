@@ -20,6 +20,7 @@ namespace kigh
                 .Center()
                 .SetResizable(true)
                 .SetIconFile("wwwroot/IconGlobe.svg") // todo: fix icon load
+                .SetContextMenuEnabled(true)
                 .Load("wwwroot/index.html");
 
             window.WaitForClose();

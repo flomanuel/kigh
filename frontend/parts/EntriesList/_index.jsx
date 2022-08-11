@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import {Switch, Tooltip} from "@mui/material";
 
 import EventAllowed from "../../helpers/EventAllowed";
+import EntryDataService from "../../services/EntryDataService";
 
 
 export default function EntriesList(props) {
@@ -20,22 +21,20 @@ export default function EntriesList(props) {
     const addRemoveEntry = (event, entry) => {
         if (EventAllowed(event, ['ListItemContainer__Switch'])) {
             event.preventDefault();
-            props.setSelectedEntries(prevState => {
-                if (event.ctrlKey) {
-                    if (prevState.includes(entry.id)) {
-                        return prevState.filter(el => el !== entry.id);
-                    }
-                    return [...prevState, entry.id];
+            let res = [];
+            if (event.ctrlKey) {
+                if (props.selectedEntries.includes(entry.id)) {
+                    res = props.selectedEntries.filter(el => el !== entry.id);
                 } else {
-                    if (prevState.length > 1) {
-                        return [entry.id];
-                    } else if (prevState.includes(entry.id)) {
-                        return [];
-                    } else {
-                        return [entry.id];
-                    }
+                    res = [...props.selectedEntries, entry.id];
                 }
-            });
+            } else {
+                if (props.selectedEntries.length > 1 || !props.selectedEntries.includes(entry.id)) {
+                    res = [entry.id];
+                }
+            }
+
+            EntryDataService.updateEntrySelection(res)
         }
     }
 
@@ -56,7 +55,7 @@ export default function EntriesList(props) {
                 </ListItemAvatar>
                 <ListItemText
                     primary={entry.title.substring(0, 20).trim() + (entry.title.length > 20 ? '...' : '')}
-                    secondary={<React.Fragment>
+                    secondary={<>
                         <Typography
                             sx={{display: 'inline'}}
                             component="span"
@@ -67,7 +66,7 @@ export default function EntriesList(props) {
                         </Typography>
                         <br/>
                         {entry.description.substring(0, 150).trim() + (entry.description.length > 150 ? '...' : '')}
-                    </React.Fragment>}
+                    </>}
                 />
                 <ListItemText
                     primary={
@@ -83,6 +82,7 @@ export default function EntriesList(props) {
                                     defaultChecked={entry.openAtStartup}
                                     onChange={(e) => {
                                         entry.openAtStartup = Boolean(e.target.checked);
+                                        EntryDataService.updateEntry(entry);
                                     }}
                                 />
                             </Tooltip>
@@ -99,8 +99,7 @@ export default function EntriesList(props) {
 
     EntriesList.propTypes = {
         entries: PropTypes.array,
-        selectedEntries: PropTypes.array,
-        setSelectedEntries: PropTypes.func
+        selectedEntries: PropTypes.array
     }
 
     return (
