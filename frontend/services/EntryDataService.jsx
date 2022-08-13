@@ -108,10 +108,9 @@ const handleBackendTaskResponse = () => {
                         FeedbackDataService.addFeedback('Could not copy exported data to clipboard.', true, 'error')
                     }
             }
-            if (jsonResult.Task !== BackendTasks.ExportEntries)
+            if (jsonResult.Task !== BackendTasks.ExportEntries && jsonResult.Task !== BackendTasks.OpenEntries)
                 entrySubject.next(jsonResult.EntryList);
         }
-
     });
 }
 handleBackendTaskResponse();

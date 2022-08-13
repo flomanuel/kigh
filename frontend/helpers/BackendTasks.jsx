@@ -3,7 +3,8 @@ const BackendTasks = {
     UpdateEntry: 2,
     DeleteEntry: 3,
     GetEntries: 4,
-    ExportEntries: 5
+    ExportEntries: 5,
+    OpenEntries: 6
 }
 
 export default BackendTasks;

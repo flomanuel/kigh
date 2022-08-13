@@ -1,6 +1,8 @@
 using PhotinoNET;
 using System;
 using System.Drawing;
+using System.IO;
+using System.Text;
 using kigh.WebMessageHandler;
 
 class Program

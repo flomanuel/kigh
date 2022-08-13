@@ -13,7 +13,7 @@ public class AddEntryWorker : AbstractWorker
     {
         foreach (var entry in entries)
         {
-            DummyData.Entries.Add(entry);
+            DummyData.Entries.Add(entry); //todo: form validation
         }
 
         return new Response(HttpStatusCode.OK, Task, DummyData.Entries);

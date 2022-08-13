@@ -21,7 +21,8 @@ public class WebMessageHandler
             new DeleteEntryWorker(),
             new GetEntriesWorker(),
             new UpdateEntryWorker(),
-            new ExportEntriesWorker()
+            new ExportEntriesWorker(),
+            new OpenEntriesWorker()
         };
 
         MessageRawData = messageRawData;

@@ -25,7 +25,7 @@ public class UpdateEntryWorker : AbstractWorker
         {
             if (candidate.Id == entry.Id)
             {
-                candidate.Update(entry);
+                candidate.Update(entry); //todo: form validation
                 return;
             }
         }

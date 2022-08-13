@@ -11,10 +11,20 @@ import Main from "./pages/Main";
 import NewEntry from "./pages/NewEntry";
 import Settings from "./pages/Settings";
 import FeedbackProvider from "./parts/FeedbackProvider/_index";
+import BackendTasks from "./helpers/BackendTasks";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root')
 );
+
+document.addEventListener('DOMContentLoaded', () => {
+    let message = {
+        Task: BackendTasks.OpenEntries,
+        EntryList: []
+    }
+    console.log(message);
+    window.external.sendMessage(JSON.stringify(message));
+})
 
 root.render(
     <>
