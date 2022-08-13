@@ -23,14 +23,14 @@ export default function EntriesList(props) {
             event.preventDefault();
             let res = [];
             if (event.ctrlKey) {
-                if (props.selectedEntries.includes(entry.id)) {
-                    res = props.selectedEntries.filter(el => el !== entry.id);
+                if (props.selectedEntries.includes(entry.Id)) {
+                    res = props.selectedEntries.filter(el => el !== entry.Id);
                 } else {
-                    res = [...props.selectedEntries, entry.id];
+                    res = [...props.selectedEntries, entry.Id];
                 }
             } else {
-                if (props.selectedEntries.length > 1 || !props.selectedEntries.includes(entry.id)) {
-                    res = [entry.id];
+                if (props.selectedEntries.length > 1 || !props.selectedEntries.includes(entry.Id)) {
+                    res = [entry.Id];
                 }
             }
 
@@ -42,19 +42,19 @@ export default function EntriesList(props) {
         return (
             <ListItem alignItems="flex-start"
                       onClick={e => addRemoveEntry(e, entry)}
-                      className={`ListItemContainer ${props.selectedEntries.includes(entry.id) ? "ListItemContainer--selected" : ""}`}
+                      className={`ListItemContainer ${props.selectedEntries.includes(entry.Id) ? "ListItemContainer--selected" : ""}`}
                       sx={{
                           cursor: "default",
                           '&.MuiListItem-root:hover:not(.ListItemContainer--selected)': {background: grey["200"]},
-                          ...(props.selectedEntries.includes(entry.id) && {'&.MuiListItem-root': {background: grey["300"]}})
+                          ...(props.selectedEntries.includes(entry.Id) && {'&.MuiListItem-root': {background: grey["300"]}})
                       }}
-                      data-id={entry.id}
+                      data-id={entry.Id}
             >
                 <ListItemAvatar>
-                    <Avatar alt={'Icon for entry' + entry.title} src={entry.image}/>
+                    <Avatar alt={'Icon for entry' + entry.Title} src={entry.Image}/>
                 </ListItemAvatar>
                 <ListItemText
-                    primary={entry.title.substring(0, 20).trim() + (entry.title.length > 20 ? '...' : '')}
+                    primary={entry.Title.substring(0, 20).trim() + (entry.Title.length > 20 ? '...' : '')}
                     secondary={<>
                         <Typography
                             sx={{display: 'inline'}}
@@ -62,10 +62,10 @@ export default function EntriesList(props) {
                             variant="body2"
                             color="text.primary"
                         >
-                            {entry.url.substring(0, 50).trim() + (entry.url.length > 50 ? '...' : '')}
+                            {entry.Url.substring(0, 50).trim() + (entry.Url.length > 50 ? '...' : '')}
                         </Typography>
                         <br/>
-                        {entry.description.substring(0, 150).trim() + (entry.description.length > 150 ? '...' : '')}
+                        {entry.Description.substring(0, 150).trim() + (entry.Description.length > 150 ? '...' : '')}
                     </>}
                 />
                 <ListItemText
@@ -79,9 +79,9 @@ export default function EntriesList(props) {
                             <Tooltip title="open at startup">
                                 <Switch
                                     className={"ListItemContainer__Switch"}
-                                    defaultChecked={entry.openAtStartup}
+                                    defaultChecked={entry.OpenAtStartup}
                                     onChange={(e) => {
-                                        entry.openAtStartup = Boolean(e.target.checked);
+                                        entry.OpenAtStartup = Boolean(e.target.checked);
                                         EntryDataService.updateEntry(entry);
                                     }}
                                 />

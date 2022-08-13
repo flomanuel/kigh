@@ -24,9 +24,9 @@ function NewEntry() {
 
     useEffect(() => {
         addEventListener('progress', handleProgressEvent);
-        const entryChange = EntryDataService.onEntryChange().subscribe(entry => {
-            if (entry) {
-                setEntry(entry);
+        const entryChange = EntryDataService.onEntryChange().subscribe(entryArray => {
+            if (entryArray.length > 0) {
+                setEntry(entryArray[0]);
             }
         });
         if (id) {
@@ -43,7 +43,7 @@ function NewEntry() {
     const handleUploadClick = (e) => {
         const reader = new FileReader();
         reader.onloadend = () => {
-            entry.image = reader.result;
+            entry.Image = reader.result;
             setIsLoading(oldState => {
                 return {...oldState, status: false}
             })
@@ -56,7 +56,7 @@ function NewEntry() {
 
     const imageResetHandler = () => {
         setEntry(oldState => {
-            return {...oldState, image: null}
+            return {...oldState, Image: null};
         })
     };
 
@@ -69,9 +69,9 @@ function NewEntry() {
                         document.getElementById('image-upload-component')?.click();
                     }}
                 >
-                    <Tooltip title={`${entry.image === null ? "Click to select image." : "Click to remove."}`}>
+                    <Tooltip title={`${entry.Image === null ? "Click to select image." : "Click to remove."}`}>
                         <CardActionArea>
-                            {entry.image === null &&
+                            {entry.Image === null &&
                                 <>
                                     <input
                                         hidden accept="image/*" name="image-upload-component"
@@ -88,7 +88,7 @@ function NewEntry() {
                                 </>
                             }
                             {
-                                entry.image !== null &&
+                                entry.Image !== null &&
                                 <>
                                     <Box onClick={() => imageResetHandler()}>
                                         <img
@@ -101,7 +101,7 @@ function NewEntry() {
                                                 margin: '0 auto',
                                                 display: 'block'
                                             }}
-                                            src={entry.image}
+                                            src={entry.Image}
                                         />
                                     </Box>
                                 </>
@@ -132,25 +132,25 @@ function NewEntry() {
                     <>
                         <TextField fullWidth required id="outlined-basic" label="Title" variant="outlined"
                                    sx={{mb: '1rem'}}
-                                   defaultValue={entry.title}
-                                   onChange={e => entry.title = e.target.value}
+                                   defaultValue={entry.Title}
+                                   onChange={e => entry.Title = e.target.value}
                         />
                         <TextField fullWidth required id="outlined-basic" label="URL" variant="outlined"
                                    sx={{mb: '1rem'}}
-                                   defaultValue={entry.url}
-                                   onChange={e => entry.url = e.target.value}
+                                   defaultValue={entry.Url}
+                                   onChange={e => entry.Url = e.target.value}
                         />
                         <TextField id="outlined-basic" label="Description" variant="outlined" fullWidth multiline
                                    sx={{mb: '1rem'}}
-                                   defaultValue={entry.description}
-                                   onChange={e => entry.description = e.target.value}
+                                   defaultValue={entry.Description}
+                                   onChange={e => entry.Description = e.target.value}
                         />
                         <FormGroup>
                             <FormLabel component="legend">open at startup</FormLabel>
                             <Switch
-                                defaultChecked={entry.openAtStartup}
+                                defaultChecked={entry.OpenAtStartup}
                                 onChange={(e) => {
-                                    entry.openAtStartup = Boolean(e.target.checked);
+                                    entry.OpenAtStartup = Boolean(e.target.checked);
                                 }}
                             />
                         </FormGroup>
@@ -167,8 +167,6 @@ function NewEntry() {
                         }
                         navigate('/', {replace: true});
                     }}
-                    //todo: use promise, feedback data service show error/success
-                    // loading={loading}
                     loadingPosition="start"
                     startIcon={<SaveIcon/>}
                     variant="contained"

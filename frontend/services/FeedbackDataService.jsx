@@ -5,11 +5,12 @@ const feedbackSubject = new Subject();
 
 let feedbackArray = [];
 
-// let FeedbackObjectTpl = (severity, message) => {
-//     return {severity: severity, message: message, open: true}
-// }
-
-const addFeedback = (feedback) => {
+const addFeedback = (message, open, severity = "success") => {
+    const feedback = {
+        severity: severity,
+        message: message,
+        open: open
+    }
     feedbackArray.push(feedback);
     if (feedbackArray.length === 1) {
         feedbackSubject.next(feedbackArray[0]);

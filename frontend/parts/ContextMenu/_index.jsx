@@ -1,7 +1,6 @@
 import * as React from 'react';
 import PropTypes from "prop-types";
 import {useNavigate} from "react-router-dom";
-import copy from 'copy-to-clipboard';
 
 import Paper from '@mui/material/Paper';
 import MenuList from '@mui/material/MenuList';
@@ -12,7 +11,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import EntryDataService from "../../services/EntryDataService";
-import FeedbackDataService from "../../services/FeedbackDataService";
 
 
 export default function ContextMenu(props) {
@@ -30,21 +28,8 @@ export default function ContextMenu(props) {
         nav(`/entry/${props.selectedEntries[0]}`, {replace: true});
     }
 
-    const exportSelection = async () => {
-        const res = await EntryDataService.exportEntrySelectionElements();
-        if (copy(res)) {
-            FeedbackDataService.addFeedback({
-                severity: 'success',
-                message: "Copied exported data to clipboard.",
-                open: true
-            })
-        } else {
-            FeedbackDataService.addFeedback({
-                severity: 'error',
-                message: "Could not copy exported data to clipboard.",
-                open: true
-            })
-        }
+    const exportSelection = () => {
+        EntryDataService.exportEntrySelectionElements();
     }
 
     const closeContextMenu = () => {

@@ -28,11 +28,11 @@ function DrawerInterior(props) {
                         <ListItemButton sx={{textAlign: 'center', color: blue["700"]}}>
                             <ListItemText
                                 onClick={() => {
-                                    if (el.fragment !== location.pathname) {
-                                        navigate(el.fragment, {replace: true})
+                                    if (el.Fragment !== location.pathname) {
+                                        navigate(el.Fragment, {replace: true})
                                     }
                                 }}>
-                                {el.title}
+                                {el.Title}
                             </ListItemText>
                         </ListItemButton>
                     </ListItem>

@@ -25,16 +25,16 @@ function DrawerAppBar() {
     const [navItems] = useState(
         [
             {
-                title: "Entries",
-                fragment: "/",
+                Title: "Entries",
+                Fragment: "/",
             },
             {
-                title: "Add new website",
-                fragment: "/entry",
+                Title: "Add new website",
+                Fragment: "/entry",
             }/*,
             {
-                title: "Settings",
-                fragment: "/settings",
+                Title: "Settings",
+                Fragment: "/settings",
             }*/
         ]
     );
@@ -42,15 +42,15 @@ function DrawerAppBar() {
 
     const NavItemElement = (props) => {
         const location = useLocation();
-        const isActiveElement = props.el.fragment === location.pathname;
+        const isActiveElement = props.el.Fragment === location.pathname;
         return (
             <Button color="inherit"
                     onClick={() => {
                         if (!isActiveElement) {
-                            navigate(props.el.fragment, {replace: true})
+                            navigate(props.el.Fragment, {replace: true})
                         }
                     }}>
-                {props.el.title}
+                {props.el.Title}
             </Button>
         )
     }
