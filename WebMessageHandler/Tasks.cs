@@ -6,6 +6,5 @@ public enum Tasks
     UpdateEntry = 2,
     DeleteEntry = 3,
     GetEntries = 4,
-    ExportEntries = 5,
-    OpenEntries = 6
+    ExportEntries = 5
 }

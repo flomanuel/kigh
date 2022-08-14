@@ -28,13 +28,17 @@ public class Entry
         Id = id;
     }
 
-    public void Update(Entry entry)
+    public void Update(Entry entryNewValues)
     {
-        Title = entry.Title;
-        Url = entry.Url;
-        Description = entry.Description;
-        OpenAtStartup = entry.OpenAtStartup;
-        Image = entry.Image;
-        Id = entry.Id;
+        if (Title != entryNewValues.Title)
+            Title = entryNewValues.Title;
+        if (Url != entryNewValues.Url)
+            Url = entryNewValues.Url;
+        if (Description != entryNewValues.Description)
+            Description = entryNewValues.Description;
+        if (OpenAtStartup != entryNewValues.OpenAtStartup)
+            OpenAtStartup = entryNewValues.OpenAtStartup;
+        if (Image != entryNewValues.Image)
+            Image = entryNewValues.Image;
     }
 }

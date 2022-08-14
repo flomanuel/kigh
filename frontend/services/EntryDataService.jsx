@@ -90,27 +90,35 @@ const exportEntrySelectionElements = () => {
 const handleBackendTaskResponse = () => {
     window.external.receiveMessage(resultText => {
         const jsonResult = JSON.parse(resultText);
-        if (Number(jsonResult.HttpStatusCode) === 200) {
-            switch (jsonResult.Task) {
-                case BackendTasks.AddEntry:
+        const taskSuccess = Number(jsonResult.HttpStatusCode) === 200;
+        switch (jsonResult.Task) {
+            case BackendTasks.AddEntry:
+                if (taskSuccess)
                     FeedbackDataService.addFeedback('Added new entry.', true);
-                    break;
-                case BackendTasks.UpdateEntry:
+                else
+                    FeedbackDataService.addFeedback("Error: Could not add new entry.", true, 'error');
+                break;
+            case BackendTasks.UpdateEntry:
+                if (taskSuccess)
                     FeedbackDataService.addFeedback('Updated entry.', true);
-                    break;
-                case BackendTasks.DeleteEntry:
+                else
+                    FeedbackDataService.addFeedback("Error: Could not update the entry.", true, 'error');
+                break;
+            case BackendTasks.DeleteEntry:
+                if (taskSuccess)
                     FeedbackDataService.addFeedback('Deleted entry.', true);
-                    break;
-                case BackendTasks.ExportEntries:
-                    if (copy(JSON.stringify(jsonResult.EntryList))) {
-                        FeedbackDataService.addFeedback('Copied exported data to clipboard.', true)
-                    } else {
-                        FeedbackDataService.addFeedback('Could not copy exported data to clipboard.', true, 'error')
-                    }
-            }
-            if (jsonResult.Task !== BackendTasks.ExportEntries && jsonResult.Task !== BackendTasks.OpenEntries)
-                entrySubject.next(jsonResult.EntryList);
+                else
+                    FeedbackDataService.addFeedback("Error: Could not delete the entry.", true, 'error');
+                break;
+            case BackendTasks.ExportEntries:
+                if (taskSuccess && copy(JSON.stringify(jsonResult.EntryList))) {
+                    FeedbackDataService.addFeedback('Copied exported data to clipboard.', true)
+                } else {
+                    FeedbackDataService.addFeedback('Could not copy exported data to clipboard.', true, 'error')
+                }
         }
+        if (taskSuccess && jsonResult.Task !== BackendTasks.ExportEntries)
+            entrySubject.next(jsonResult.EntryList);
     });
 }
 handleBackendTaskResponse();

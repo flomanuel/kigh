@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Net;
 using kigh.WebMessageHandler.InstructionWorker;
+using kigh.WebMessageHandler.Model;
 using Newtonsoft.Json;
 
 namespace kigh.WebMessageHandler;
@@ -7,48 +9,44 @@ namespace kigh.WebMessageHandler;
 public class WebMessageHandler
 {
     private string MessageRawData { get; }
+    public EntryContext DbContext { get; }
     private WebMessage WebMessage { get; set; }
 
     public Response Response { get; set; }
 
-    private readonly List<AbstractWorker> _workers;
+    private readonly Dictionary<Tasks, AbstractWorker> _workers;
 
-    public WebMessageHandler(string messageRawData)
+    public WebMessageHandler(string messageRawData, EntryContext dbContext)
     {
-        _workers = new List<AbstractWorker>
+        _workers = new Dictionary<Tasks, AbstractWorker>
         {
-            new AddEntryWorker(),
-            new DeleteEntryWorker(),
-            new GetEntriesWorker(),
-            new UpdateEntryWorker(),
-            new ExportEntriesWorker(),
-            new OpenEntriesWorker()
+            {Tasks.AddEntry, new CreateEntryWorker()},
+            {Tasks.DeleteEntry, new DeleteEntryWorker()},
+            {Tasks.GetEntries, new ReadEntriesWorker()},
+            {Tasks.UpdateEntry, new UpdateEntryWorker()},
+            {Tasks.ExportEntries, new ExportEntriesWorker()}
         };
 
         MessageRawData = messageRawData;
+        DbContext = dbContext;
         ParseMessage();
         HandleInstructions();
     }
 
-    private void ParseMessage()
+    private void ParseMessage() //todo: form validation
     {
         WebMessage = JsonConvert.DeserializeObject<WebMessage>(MessageRawData);
     }
 
     private void HandleInstructions()
     {
-        foreach (var worker in _workers)
+        if (_workers.TryGetValue(WebMessage.Task, out var worker))
         {
-            if (worker.Task == WebMessage.Task)
-            {
-                Response = worker.Run(WebMessage.EntryList);
-                break;
-            }
+            Response = worker.Run(WebMessage.EntryList, DbContext);
         }
-    }
-
-    public override string ToString()
-    {
-        return Response.ToString();
+        else
+        {
+            Response = new Response(HttpStatusCode.InternalServerError, WebMessage.Task);
+        }
     }
 }

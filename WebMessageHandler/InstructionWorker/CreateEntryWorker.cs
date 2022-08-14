@@ -1,36 +1,35 @@
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Linq;
+using System.Net;
 using kigh.WebMessageHandler.Model;
 
 namespace kigh.WebMessageHandler.InstructionWorker;
 
-public class UpdateEntryWorker : AbstractWorker
+public class CreateEntryWorker : AbstractWorker
 {
-    public UpdateEntryWorker() : base(Tasks.UpdateEntry)
+    public CreateEntryWorker() : base(Tasks.AddEntry)
     {
     }
 
     public override Response Run(List<Entry> entries, EntryContext entryContext)
     {
         var error = false;
-        try
+        List<Entry> result;
+        foreach (var entry in entries)
         {
-            foreach (var entry in entries)
+            try
             {
-                var entity = entryContext.Entries.FirstOrDefault(item => item.Id == entry.Id);
-                entity.Update(entry);
+                entryContext.Add(entry);
                 entryContext.SaveChanges();
             }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-            error = true;
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                error = true;
+            }
         }
 
-        List<Entry> result;
         try
         {
             result = entryContext.Entries.OrderBy(e => e.Title).ToList();

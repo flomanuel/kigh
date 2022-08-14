@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using kigh.WebMessageHandler.Model;
+using System.Linq;
+
 
 namespace kigh.WebMessageHandler.InstructionWorker;
 
-public class ExportEntriesWorker : AbstractWorker
+public class ReadEntriesWorker : AbstractWorker
 {
-    public ExportEntriesWorker() : base(Tasks.ExportEntries)
+    public ReadEntriesWorker() : base(Tasks.GetEntries)
     {
     }
 
@@ -17,13 +18,16 @@ public class ExportEntriesWorker : AbstractWorker
     {
         List<Entry> result;
         var error = false;
-
-        var selectedEntries = new List<string>();
-        entries.ForEach(e => selectedEntries.Add(e.Id));
-
         try
         {
-            result = entryContext.Entries.Where(entry => selectedEntries.Contains(entry.Id)).ToList();
+            if (entries.Count > 0)
+            {
+                var selectedEntries = new List<string>();
+                entries.ForEach(e => selectedEntries.Add(e.Id));
+                result = entryContext.Entries.Where(entry => selectedEntries.Contains(entry.Id)).ToList();
+            }
+            else
+                result = entryContext.Entries.OrderBy(e => e.Title).ToList();
         }
         catch (Exception e)
         {
@@ -32,7 +36,6 @@ public class ExportEntriesWorker : AbstractWorker
             result = new List<Entry>();
         }
 
-        //todo: instead of copy to clipboard, write data to file for download
         return new Response(error ? HttpStatusCode.InternalServerError : HttpStatusCode.OK, Task, result);
     }
 }
