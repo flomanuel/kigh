@@ -16,9 +16,10 @@ function NewEntry() {
     const navigate = useNavigate();
     const {id} = useParams();
     const [entry, setEntry] = useState(null);
-    const [isLoading, setIsLoading] = useState({status: false, progress: 0});
+    const [isLoadingImg, setIsLoadingImg] = useState({status: false, progress: 0});
+    const [isSavingEntry, setIsSavingEntry] = useState(false);
 
-    const handleProgressEvent = (event) => setIsLoading(oldState => {
+    const handleProgressEvent = (event) => setIsLoadingImg(oldState => {
         return {...oldState, progress: event.total / event.loaded}
     });
 
@@ -44,11 +45,11 @@ function NewEntry() {
         const reader = new FileReader();
         reader.onloadend = () => {
             entry.Image = reader.result;
-            setIsLoading(oldState => {
+            setIsLoadingImg(oldState => {
                 return {...oldState, status: false}
             })
         }
-        setIsLoading(oldState => {
+        setIsLoadingImg(oldState => {
             return {...oldState, status: true}
         })
         reader.readAsDataURL(e.target.files[0]);
@@ -80,9 +81,9 @@ function NewEntry() {
                                     <label hidden htmlFor="image-upload-component"/>
                                     <ImagePlaceholder style={{margin: '0 auto', display: 'block'}}/>
                                     {
-                                        isLoading.status &&
+                                        isLoadingImg.status &&
                                         <>
-                                            <LinearProgressBarWithValueLabel value={isLoading.progress}/>
+                                            <LinearProgressBarWithValueLabel value={isLoadingImg.progress}/>
                                         </>
                                     }
                                 </>
@@ -160,13 +161,16 @@ function NewEntry() {
                 <LoadingButton
                     color="secondary"
                     onClick={() => {
+                        setIsSavingEntry(true);
                         if (id) {
                             EntryDataService.updateEntry(entry);
                         } else {
                             EntryDataService.addEntry(entry);
                         }
+                        setIsSavingEntry(false);
                         navigate('/', {replace: true});
                     }}
+                    loading={isSavingEntry}
                     loadingPosition="start"
                     startIcon={<SaveIcon/>}
                     variant="contained"
