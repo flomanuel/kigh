@@ -1,0 +1,41 @@
+<svg width="250" xmlns="http://www.w3.org/2000/svg" height="163"
+     id="screenshot-fffffe50-0b66-11ed-8ed0-cd2108b28f73" viewBox="-1.5 -1.5 250 163"
+     style="-webkit-print-color-adjust: exact;" fill="none" version="1.1">
+    <g id="shape-fffffe50-0b66-11ed-8ed0-cd2108b28f73">
+        <g id="shape-fffffe51-0b66-11ed-8ed0-cd2108b28f73">
+            <g id="fills-fffffe51-0b66-11ed-8ed0-cd2108b28f73">
+                <rect rx="10" ry="10" x="0" y="0" transform="matrix(1,0,0,1,0,0)" width="247" height="160"/>
+            </g>
+            <g id="strokes-fffffe51-0b66-11ed-8ed0-cd2108b28f73">
+                <g class="stroke-shape">
+                    <rect rx="10" ry="10" x="0" y="0" transform="matrix(1,0,0,1,0,0)" width="247" height="160"
+                          style="fill: none; stroke-width: 3; stroke: rgb(95, 95, 95); stroke-opacity: 0.5;"/>
+                </g>
+            </g>
+        </g>
+        <g id="shape-fffffe52-0b66-11ed-8ed0-cd2108b28f73">
+            <g id="fills-fffffe52-0b66-11ed-8ed0-cd2108b28f73">
+                <path d="M247,68.14697654507654L187.35812859638736,29L125.88829397246081,108.79960603419295L63.11059052674955,68.14697654507654L0,133"/>
+            </g>
+            <g id="strokes-fffffe52-0b66-11ed-8ed0-cd2108b28f73">
+                <g class="stroke-shape">
+                    <path d="M247,68.14697654507654L187.35812859638736,29L125.88829397246081,108.79960603419295L63.11059052674955,68.14697654507654L0,133"
+                          style="fill: none; stroke-width: 3; stroke: rgb(95, 95, 95); stroke-opacity: 0.5;"/>
+                </g>
+            </g>
+        </g>
+        <g id="shape-fffffe53-0b66-11ed-8ed0-cd2108b28f73">
+            <g id="fills-fffffe53-0b66-11ed-8ed0-cd2108b28f73">
+                <ellipse rx="14.500000000000227" ry="14.499999999999943" cx="39.50000000000023" cy="39.49999999999994"
+                         transform="matrix(1,0,0,1,0,0)"/>
+            </g>
+            <g id="strokes-fffffe53-0b66-11ed-8ed0-cd2108b28f73">
+                <g class="stroke-shape">
+                    <ellipse rx="14.500000000000227" ry="14.499999999999943" cx="39.50000000000023"
+                             cy="39.49999999999994" transform="matrix(1,0,0,1,0,0)"
+                             style="fill: none; stroke-width: 3; stroke: rgb(95, 95, 95); stroke-opacity: 0.5;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

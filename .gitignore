@@ -1,0 +1,12 @@
+/bin/
+/bin/*
+/obj/
+/obj/*
+/.idea/*
+!/.idea/icon.svg
+
+# dependencies
+/node_modules
+/wwwroot/
+/wwwroot/*
+!/wwwroot/.gitkeep
