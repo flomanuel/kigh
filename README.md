@@ -2,8 +2,10 @@
 
 
 [![License](https://img.shields.io/badge/License-MIT-blue)](https://opensource.org/licenses/MIT)
+[![stability-alpha](https://img.shields.io/badge/stability-alpha-f4d03f.svg)](https://github.com/flomanuel/kigh)
 ## Overview
 Kigh lets you use your favourite web apps like desktop apps.
+
 
 ### Images
 - [start page](doc/assets/demoImages/startPage.png).
