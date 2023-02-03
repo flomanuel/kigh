@@ -6,12 +6,21 @@ using kigh.WebMessageHandler.Model;
 
 namespace kigh.WebMessageHandler.InstructionWorker;
 
+/// <summary>
+/// Worker for creating and saving new entries.
+/// </summary>
 public class CreateEntryWorker : AbstractWorker
 {
     public CreateEntryWorker() : base(Tasks.AddEntry)
     {
     }
-
+    
+    /// <summary>
+    /// Start the task.
+    /// </summary>
+    /// <param name="entries">List of all entries that are to be processed.</param>
+    /// <param name="entryContext">Database session object</param>
+    /// <returns>Response class containing the http status code (500 or 200)</returns>
     public override Response Run(List<Entry> entries, EntryContext entryContext)
     {
         var error = false;

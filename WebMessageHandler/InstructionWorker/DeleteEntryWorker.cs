@@ -6,12 +6,21 @@ using kigh.WebMessageHandler.Model;
 
 namespace kigh.WebMessageHandler.InstructionWorker;
 
+/// <summary>
+/// Worker for deleting existing entries.
+/// </summary>
 public class DeleteEntryWorker : AbstractWorker
 {
     public DeleteEntryWorker() : base(Tasks.DeleteEntry)
     {
     }
 
+    /// <summary>
+    /// Start the task.
+    /// </summary>
+    /// <param name="entries">List of all entries that are to be processed.</param>
+    /// <param name="entryContext">Database session object</param>
+    /// <returns>Response class containing the http status code (500 or 200)</returns>
     public override Response Run(List<Entry> entries, EntryContext entryContext)
     {
         List<Entry> result;

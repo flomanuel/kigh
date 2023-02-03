@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace kigh.WebMessageHandler.Model;
 
+/// <summary>
+/// Session with the database for persisting / loading entries from the database.
+/// </summary>
 public class EntryContext : DbContext
 {
     public DbSet<Entry> Entries { get; set; }

@@ -21,9 +21,9 @@ public class Response
     public override string ToString()
     {
         StringBuilder result = new StringBuilder();
-        result.Append(@"{""HttpStatusCode"":" + (int) StatusCode)
+        result.Append(@"{""HttpStatusCode"":" + (int)StatusCode)
             .Append(@",""Task"":")
-            .Append((int) Task)
+            .Append((int)Task)
             .Append(@",""EntryList"":[");
         for (int i = 0; i < Entries.Count; ++i)
         {

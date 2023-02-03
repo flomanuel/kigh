@@ -6,25 +6,41 @@ using Newtonsoft.Json;
 
 namespace kigh.WebMessageHandler;
 
+/// <summary>
+/// Class for handling frontend requests. Interpreting values, creating objects, calling responsible worker.
+/// </summary>
 public class WebMessageHandler
 {
     private string MessageRawData { get; }
+
+    /// <summary>
+    /// Database session object
+    /// </summary>
     public EntryContext DbContext { get; }
+
     private WebMessage WebMessage { get; set; }
 
+    /// <summary>
+    /// Response returned by the worker.
+    /// </summary>
     public Response Response { get; set; }
 
     private readonly Dictionary<Tasks, AbstractWorker> _workers;
 
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="messageRawData">Frontend message data. JSON format</param>
+    /// <param name="dbContext">Database session object</param>
     public WebMessageHandler(string messageRawData, EntryContext dbContext)
     {
         _workers = new Dictionary<Tasks, AbstractWorker>
         {
-            {Tasks.AddEntry, new CreateEntryWorker()},
-            {Tasks.DeleteEntry, new DeleteEntryWorker()},
-            {Tasks.GetEntries, new ReadEntriesWorker()},
-            {Tasks.UpdateEntry, new UpdateEntryWorker()},
-            {Tasks.ExportEntries, new ExportEntriesWorker()}
+            { Tasks.AddEntry, new CreateEntryWorker() },
+            { Tasks.DeleteEntry, new DeleteEntryWorker() },
+            { Tasks.GetEntries, new ReadEntriesWorker() },
+            { Tasks.UpdateEntry, new UpdateEntryWorker() },
+            { Tasks.ExportEntries, new ExportEntriesWorker() }
         };
 
         MessageRawData = messageRawData;
