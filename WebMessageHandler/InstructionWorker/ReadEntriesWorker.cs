@@ -12,6 +12,9 @@ namespace kigh.WebMessageHandler.InstructionWorker;
 /// </summary>
 public class ReadEntriesWorker : AbstractWorker
 {
+    /// <summary>
+    /// Constructor.
+    /// </summary>
     public ReadEntriesWorker() : base(Tasks.GetEntries)
     {
     }

@@ -8,10 +8,16 @@ namespace kigh.WebMessageHandler.Model;
 /// </summary>
 public class EntryContext : DbContext
 {
+    /// <summary>
+    /// Database Set containing all entries.
+    /// </summary>
     public DbSet<Entry> Entries { get; set; }
 
-    public string DbPath { get; }
+    private string DbPath { get; }
 
+    /// <summary>
+    /// Constructor.
+    /// </summary>
     public EntryContext()
     {
         var folder = Environment.SpecialFolder.LocalApplicationData;

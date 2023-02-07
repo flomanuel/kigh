@@ -11,6 +11,9 @@ namespace kigh.WebMessageHandler.InstructionWorker;
 /// </summary>
 public class DeleteEntryWorker : AbstractWorker
 {
+    /// <summary>
+    /// Constructor.
+    /// </summary>
     public DeleteEntryWorker() : base(Tasks.DeleteEntry)
     {
     }

@@ -11,6 +11,9 @@ namespace kigh.WebMessageHandler.InstructionWorker;
 /// </summary>
 public class ExportEntriesWorker : AbstractWorker
 {
+    /// <summary>
+    /// Constructor.
+    /// </summary>
     public ExportEntriesWorker() : base(Tasks.ExportEntries)
     {
     }

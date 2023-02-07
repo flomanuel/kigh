@@ -11,6 +11,9 @@ namespace kigh.WebMessageHandler.InstructionWorker;
 /// </summary>
 public class UpdateEntryWorker : AbstractWorker
 {
+    /// <summary>
+    /// Constructor.
+    /// </summary>
     public UpdateEntryWorker() : base(Tasks.UpdateEntry)
     {
     }

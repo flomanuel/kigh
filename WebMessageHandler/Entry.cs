@@ -7,41 +7,35 @@ namespace kigh.WebMessageHandler;
 /// </summary>
 public class Entry
 {
-    private string _id;
-
     /// <summary>
     /// Unique ID of the entry.
     /// </summary>
-    public string Id
-    {
-        get => _id;
-        private set => _id = string.IsNullOrEmpty(value) ? Guid.NewGuid().ToString() : value;
-    }
+    public string Id { get; }
 
     /// <summary>
     /// Title of the entry. Defined by the user.
     /// </summary>
-    public string Title { get; set; }
+    public string Title { get; private set; }
 
     /// <summary>
     /// URL of the website to be opened.
     /// </summary>
-    public string Url { get; set; }
+    public string Url { get; private set; }
 
     /// <summary>
     /// Description of the entry. Defined by the user.
     /// </summary>
-    public string Description { get; set; }
+    private string Description { get; set; }
 
     /// <summary>
     /// If the URL is to be opened at the startup of 'kigh'. Defined by the user.
     /// </summary>
-    public bool OpenAtStartup { get; set; }
+    public bool OpenAtStartup { get; private set; }
 
     /// <summary>
     /// Base64-String of the entry icon. Defined by the user.
     /// </summary>
-    public string Image { get; set; }
+    private string Image { get; set; }
 
     /// <summary>
     /// Constructor of the entry class.
@@ -63,7 +57,7 @@ public class Entry
         Description = description;
         OpenAtStartup = openAtStartup;
         Image = image ?? "";
-        Id = id;
+        Id = string.IsNullOrEmpty(id) ? Guid.NewGuid().ToString() : id;
     }
 
     /// <summary>
@@ -99,5 +93,15 @@ public class Entry
         var el = obj as Entry;
         return el != null && Title.Equals(el.Title) && Url.Equals(el.Url) && Description.Equals(el.Description) &&
                OpenAtStartup.Equals(el.OpenAtStartup) && Image.Equals(el.Image);
+    }
+
+    /// <summary>
+    /// Creating the objects hash code.
+    /// </summary>
+    /// <returns>returns hash code</returns>
+    public override int GetHashCode()
+    {
+        return base.GetHashCode() ^ Title.GetHashCode() ^ Url.GetHashCode() ^ Description.GetHashCode() ^
+               OpenAtStartup.GetHashCode() ^ Image.GetHashCode();
     }
 }

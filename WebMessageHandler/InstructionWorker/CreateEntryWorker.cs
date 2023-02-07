@@ -11,10 +11,13 @@ namespace kigh.WebMessageHandler.InstructionWorker;
 /// </summary>
 public class CreateEntryWorker : AbstractWorker
 {
+    /// <summary>
+    /// Constructor.
+    /// </summary>
     public CreateEntryWorker() : base(Tasks.AddEntry)
     {
     }
-    
+
     /// <summary>
     /// Start the task.
     /// </summary>

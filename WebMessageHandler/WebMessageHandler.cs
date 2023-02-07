@@ -13,17 +13,14 @@ public class WebMessageHandler
 {
     private string MessageRawData { get; }
 
-    /// <summary>
-    /// Database session object
-    /// </summary>
-    public EntryContext DbContext { get; }
+    private EntryContext DbContext { get; }
 
     private WebMessage WebMessage { get; set; }
 
     /// <summary>
     /// Response returned by the worker.
     /// </summary>
-    public Response Response { get; set; }
+    public Response Response { get; private set; }
 
     private readonly Dictionary<Tasks, AbstractWorker> _workers;
 
